@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
     public function index()
     {
-        return view('cursos.index');
+        $cursos = Curso::paginate();
+
+        //Passing variable $cursos to cursos.index View
+        return view('cursos.index', compact('cursos'));
     }
 
     public function create()
@@ -16,8 +20,34 @@ class CursoController extends Controller
         return view('cursos.create');
     }
 
-    public function show($curso)
+    public function store(Request $request)
     {
-        return view('cursos.show', compact('curso') /*['curso' => $curso]*/);
+        $curso = new Curso();
+        $curso->name = $request->name;
+        $curso->descripcion = $request->descripcion;
+        $curso->categoria = $request->categoria;
+        $curso->save();
+
+        return redirect()->route('cursos.show', $curso);
+    }
+
+    public function show(Curso $curso)
+    {
+        return view('cursos.show', compact('curso'));
+    }
+
+    public function edit(Curso $curso)
+    {
+        return view('cursos.edit', compact('curso'));
+    }
+
+    public function update(Request $request, Curso $curso)
+    {
+        $curso->name = $request->name;
+        $curso->descripcion = $request->descripcion;
+        $curso->categoria = $request->categoria;
+        $curso->save();
+
+        return redirect()->route('cursos.show', $curso);
     }
 }
