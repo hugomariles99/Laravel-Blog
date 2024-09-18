@@ -9,25 +9,53 @@
 
         @csrf
 
-        <label>
-            Nombre:
-            <br>
-            <input type="text" name="name">
-        </label>
+        {{-- NAME --}}
+        <div>
+            <label>
+                Nombre:
+                <br>
+                <input type="text" name="name" value="{{ old('name') }}">
+            </label>
 
-        <br>
-        <label>
-            Descripcion:
-            <br>
-            <textarea name="descripcion" rows="5"></textarea>
-        </label>
+            @error('name')
+                <br>
+                <span>*{{ $message }}</span>
+                <br>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Categoria:
+        {{-- DESCRIPCION --}}
+        <div>
             <br>
-            <input type="text" name="categoria">
-        </label>
+            <label>
+                Descripcion:
+                <br>
+                <textarea name="descripcion" rows="5">{{ old('descripcion') }}</textarea>
+            </label>
+
+            @error('descripcion')
+                <br>
+                <span>*{{ $message }}</span>
+                <br>
+            @enderror
+        </div>
+
+        {{-- CATEGORIA --}}
+        <div>
+            <br>
+            <label>
+                Categoria:
+                <br>
+                <input type="text" name="categoria" value="{{ old('categoria') }}">
+            </label>
+
+            @error('categoria')
+                <br>
+                <span>*{{ $message }}</span>
+                <br>
+            @enderror
+        </div>
+
 
         <br>
         <button type="submit">
